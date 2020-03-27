@@ -4,7 +4,7 @@
 \alias{svy_prop}
 \title{svy_prop}
 \usage{
-svy_prop(row, column, data)
+svy_prop(row, column, data, orientation = NULL)
 }
 \arguments{
 \item{row}{Row variable from survey object.}
@@ -12,6 +12,8 @@ svy_prop(row, column, data)
 \item{column}{Column variable from survey object.}
 
 \item{data}{Survey object.}
+
+\item{orientation}{Specify whether proportions should be given rowwise or colwise.}
 }
 \value{
 A dataframe with survey frequencies put into a table of proportions.
