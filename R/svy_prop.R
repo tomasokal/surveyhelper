@@ -30,6 +30,7 @@ svy_prop <- function(row, column, data, orientation = NULL) {
       
       df_prop <- apply(df_prop, 2, function(x) {x / sum(x)})
       df_prop[is.na(df_prop)] <- 0
+      df_prop <- df_prop * 100
       
     }
     
@@ -38,6 +39,7 @@ svy_prop <- function(row, column, data, orientation = NULL) {
       df_prop_sum <- apply(df_prop[, 1:ncol(df_prop)], 1, sum)
       df_prop <- df_prop / df_prop_sum
       df_prop[is.na(df_prop)] <- 0
+      df_prop <- df_prop * 100
       
     }
     
