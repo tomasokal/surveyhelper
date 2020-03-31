@@ -34,7 +34,7 @@ svy_prop <- function(row, column, data, orientation = NULL) {
       
     }
     
-    if (orientation == "rowwise") {
+    else if (orientation == "rowwise") {
       
       df_prop_sum <- apply(df_prop[, 1:ncol(df_prop)], 1, sum)
       df_prop <- df_prop / df_prop_sum
