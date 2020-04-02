@@ -12,9 +12,15 @@
 #'
 svy_compare <- function(variables, data) {
   
-  # Use unique(expand.grid()) on the vector of variables.
+  dt <- setDT(data[["variables"]])
   
-  # Get counts of how many times each combination appears in the provided dataset.
+  dt_output <- dt[
+    
+    ,
+    .N
+    ,
+    by = mget(variables)
+  ]
   
 }
 
@@ -47,4 +53,14 @@ dt[
   , 
   by = .(var1, var2)
   ]
+dt[
+  , 
+  .N
+  , 
+  by = mget(variables)
+  ]
 
+variables = c("var1", "var2")
+check <- rlang::expr(var1)
+check <- as.name(variables)
+list(svy_df$variables$var1, svy_df$variables$var1)
