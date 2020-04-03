@@ -7,9 +7,9 @@
 svy_compare(variables, data)
 }
 \arguments{
-\item{variables}{Vector of columns from survey object.}
+\item{variables}{Vector of columns from data.}
 
-\item{data}{Survey object.}
+\item{data}{A data object that can be either a survey object or other data type.}
 }
 \value{
 A data.frame with counts of each possible combination.
