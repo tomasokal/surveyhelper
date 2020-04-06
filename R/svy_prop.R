@@ -8,14 +8,17 @@
 #' @param orientation Specify whether proportions should be given rowwise or colwise.
 #'
 #' @return A dataframe with survey frequencies put into a table of proportions.
+#' 
+#' @export
 #'
 #' @import survey
+#' @importFrom stats as.formula
 #'
-#' @examples svy_prop(row = "b1a", column = "raceth", data = svy_df)
+#' 
 svy_prop <- function(row, column, data, orientation = NULL) {
   
-  formula <- as.formula(paste0("~", column, "+", row))
-  df <- as.data.frame(svytable(formula, design = data, Ntotal = 100))
+  formula <- stats::as.formula(paste0("~", column, "+", row))
+  df <- as.data.frame(survey::svytable(formula, design = data, Ntotal = 100))
   df_prop <- as.data.frame(tapply(df[, 3], list(df[, 2], df[, 1]), mean))
   
   if (missing(orientation)) {

@@ -21,6 +21,3 @@ A dataframe with survey frequencies put into a table of proportions.
 \description{
 This is helper function to create a table of survey frequency proportions with one row variable and one column variable.
 }
-\examples{
-svy_prop(row = "b1a", column = "raceth", data = svy_df)
-}
