@@ -21,18 +21,21 @@ dt2 <- as.data.table(stats::model.matrix(~ pid - 1, data = df))
     # Issue exists that this adds in the variables as they appear in dataset.
 
 dt_model <- as.data.table(cbind(dt[, -c(3, 4)], dt1, dt2))
+names(dt_model) <- make.names(names(dt_model))
 
   # cbind these outputs to the orginal dataframe where we also drop the original variables.
 
-dclus1 <- survey::svydesign(id = ~ CaseId, weights = ~ WEIGHT_ENES, data = dt_model)
+svy_dt <- survey::svydesign(id = ~ CaseId, weights = ~ WEIGHT_ENES, data = dt_model)
 
   # Generate survey design object.
 
-cols <- grep("pid", names(dt_model))
+cols_r <- grep("CUR1", names(dt_model))
+cols_g <- grep("pid", names(dt_model))
 
   # Pick out columns that have the group variable in them.
 
-group_var <- as.list(names(dt_model[, ..cols]))
+respo_var <- as.list(names(dt_model[, ..cols_r]))
+group_var <- as.list(names(dt_model[, ..cols_g]))
 
   # Assign these into a list.
     
@@ -40,7 +43,34 @@ group_var <- as.list(names(dt_model[, ..cols]))
 
 ## Funcitonal process
 
-list_m <- lapply(group_var, function(x) svyglm(as.formula(paste0("`CUR1Right direction` ~ ", x)), design = dclus1))
+for (i in respo_var) {
+  
+  for (j in group_var) {
+    
+    print(svyglm(as.formula(paste0(i, "~", j)), design = svy_dt))
+    
+  }
+  
+}
+
+
+function_formulacreate <- function(x, y) {
+  
+  paste0(x, "~", y)
+  
+}
+
+mapply(function_formulacreate, respo_var, group_var)
+
+function_test <- function(x, y) {
+  
+  svyglm(as.formula(paste0(x, "~", y)), design = svy_dt)
+  
+}
+
+list_m <- mapply(function_test, x = respo_var, y = group_var)
+
+list_m <- lapply(group_var, function(x) svyglm(as.formula(paste0("`CUR1Right direction` ~ ", x)), design = svy_dt))
 
   # Run svyglm over list of group variables. 
 
